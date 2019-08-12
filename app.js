@@ -19,23 +19,25 @@ $(function() {
 
     // initial uploading gallery photos
     function loadImages(){
-    $.ajax (galleryUrl)
-    .done(pics => {
-        console.log(pics);
-        pics.forEach(pic => {
-
-        const newPic = $(`<img src = ${pic.img_src}, class = gallery-img>`);
-
-        //     $(galleryCtn).append("<img class = gallery-img>")
-        //     .attr("src", `${pic.img_src}`)
-        galleryCtn.append(newPic);
+        $.ajax (galleryUrl)
+        .done(result => {
+            console.log(result);
+            console.log(result.photos);
+            $(result.photos).each(idx => {
+                let newPics = $(`<img class=gallery-img>`).attr("src", `${result.photos[idx].img_src}`); 
+                $(galleryCtn).append(newPics);
+                
+            })
         })
-        
-    })
-}
-    // .fail(function(){})
-    
-    // res.forEach(el => {
+
+        .fail(function(){
+        console.log("wymyślić coś ładnego na pocieszenie")
+        })
+    }    
+
+
+    apod();
+    loadImages();    
 
     
     // //fcja load more z klikiem na btn
@@ -67,9 +69,7 @@ $(function() {
     //         $btn.prop('disabled', false);
     //     });
     // });
-    
-    apod();
-    loadImages();
+
 
 //end
 }); 
